@@ -111,7 +111,11 @@ describe Ingreedy, "composed brackets/quates" do
     "1  ((28) ounce) can crushed tomatoes" => 28,
     "1  ('28' ounce) can crushed tomatoes" => 28,
     "1  ('28') ounce can crushed tomatoes" => 28,
-    "1  '(28)' ounce can crushed tomatoes" => 28
+    "1  '(28)' ounce can crushed tomatoes" => 28,
+    "1  can ((28) ounce) crushed tomatoes" => 28,
+    "1   can  ('28' ounce) ounce crushed tomatoes" => 28,
+    "1  can  (28 ounce) crushed tomatoes" => 28,
+    "1  can 28 ounce crushed tomatoes" => 28,
   }.each do |query, expected|
     it "parses correctly for container amount query: '#{query}'" do
       expect(Ingreedy.parse(query).container_amount).to eq(expected.to_r)
@@ -379,14 +383,6 @@ describe Ingreedy, "with 'reverse format'" do
     expect(result.amount).to eq(200)
     expect(result.unit).to eq(:gram)
     expect(result.ingredient).to eq("quinoa")
-  end
-
-  it "works with approximate quantities" do
-    result = Ingreedy.parse "salt to taste"
-
-    expect(result.ingredient).to eq("salt")
-    expect(result.amount).to be_nil
-    expect(result.unit).to eq(:to_taste)
   end
 end
 
