@@ -70,6 +70,7 @@ module Ingreedy
     rule(:amount_and_unit) do
       (range | amount) >>
         whitespace.maybe >>
+        container_size.maybe >>
         unit_and_preposition.maybe >>
         container_size.maybe
     end

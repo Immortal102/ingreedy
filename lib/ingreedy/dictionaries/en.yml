@@ -110,8 +110,6 @@
   :can:
     - "cans"
     - "can"
-  :to_taste:
-    - "to taste"
 :numbers:
   a: 1
   an: 1
