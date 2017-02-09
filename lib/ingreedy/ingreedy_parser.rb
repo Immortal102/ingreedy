@@ -107,8 +107,9 @@ module Ingreedy
     def raise_or(result)
       if result.amount.nil?
         raise EmptyAmount.new('amount is not present')
-      elsif result.ingredient.match(/\d/)
-        raise IncorrectIngredient.new('ingredient contains numbers')
+      # if ingredient contains numbers or empty array(parslet returns [] when the ingredient is empty) or just spaces
+      elsif result.ingredient.match(/(\d)|(\[\])|(^\s+$)/)
+        raise IncorrectIngredient.new('ingredient looks as incorrect')
       else
         result
       end
