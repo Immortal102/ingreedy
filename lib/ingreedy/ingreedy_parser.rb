@@ -45,7 +45,7 @@ module Ingreedy
           parslet[:container_unit].to_s,
         ) if parslet[:container_unit]
 
-        result.ingredient = parslet[:ingredient].to_s.lstrip.rstrip # TODO: hack
+        result.ingredient = cleaned_ingredient(parslet[:ingredient].to_s)
 
         with_handling_errors_for(result)
       rescue Parslet::ParseFailed => e
@@ -61,6 +61,11 @@ module Ingreedy
 
     def after_error_callback
       Ingreedy.after_error
+    end
+
+    def cleaned_ingredient(ingr_str)
+      # clean from trailing spaces + return empty string when there are only spaces or empty array (parslet returns [] when the ingredient is empty)
+      ingr_str.strip.gsub(/^(\[\]|\s+)$/, '')
     end
 
     def cleaned_amount(amount_str)
@@ -107,8 +112,8 @@ module Ingreedy
     def raise_or(result)
       if result.amount.nil?
         raise EmptyAmount.new('amount is not present')
-      # if ingredient contains numbers or empty array(parslet returns [] when the ingredient is empty) or just spaces
-      elsif result.ingredient.match(/(\d)|(\[\])|(^\s+$)/)
+      # if the ingredient contains numbers or it is empty than we consider such ingredient string was parsed incorrectly
+      elsif result.ingredient.empty? || result.ingredient.match(/(\d)/)
         raise IncorrectIngredient.new('ingredient looks as incorrect')
       else
         result
