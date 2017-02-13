@@ -327,7 +327,7 @@ describe Ingreedy, "container as part of quantity" do
     expect(result.unit).to eq(:gram)
     expect(result.container_amount).to eq(2)
     expect(result.container_unit).to eq(:can)
-    expect(result.ingredient).to eq("tomatoes")
+    expect(result.ingredient).to eq("of tomatoes")
   end
 
   context "on language without preposition" do
@@ -364,7 +364,7 @@ describe Ingreedy, "with 'a' as quantity and preposition 'of'" do
 
     expect(result.amount).to eq(1)
     expect(result.unit).to eq(:dash)
-    expect(result.ingredient).to eq("ginger")
+    expect(result.ingredient).to eq("of ginger")
   end
 end
 
