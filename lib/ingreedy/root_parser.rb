@@ -9,7 +9,7 @@ module Ingreedy
     end
 
     rule(:range_separator) do
-      str("-") | str("~")
+      str("to") | str("-") | str("~")
     end
 
     rule(:amount) do
