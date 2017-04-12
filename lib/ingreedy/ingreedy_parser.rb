@@ -73,8 +73,8 @@ module Ingreedy
     end
 
     def spaces_cleaned(str)
-      # replace all the multiple spaces with single one
-      str.gsub(/\s+/, ' ')
+      # replace all the multiple spaces with single one + spases from beginning and end
+      str.gsub(/\s+/, ' ').strip
     end
 
     def convert_unit_variation_to_canonical(unit_variation)
