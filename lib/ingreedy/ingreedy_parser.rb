@@ -73,8 +73,12 @@ module Ingreedy
     end
 
     def spaces_cleaned(str)
-      # replace all the multiple spaces with single one + spases from beginning and end
-      str.gsub(/\s+/, ' ').strip
+      # replace all the multiple spaces with single one + spases from beginning and end + cleanup from special symbols in a beginning of string
+      str.gsub(/\s+/, ' ').strip.gsub(/^[^\.\,\d\w#{vulgar_fractions_reg}]+/, '')
+    end
+
+    def vulgar_fractions_reg
+      @vulgar_fractions_reg ||= Regexp.new Ingreedy.dictionaries.current.vulgar_fractions.keys.join
     end
 
     def convert_unit_variation_to_canonical(unit_variation)
